@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'vazir';
+    src: url("../fonts/vazir.ttf");
+}
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'vazir' !important;
+}
+
+header > nav{
+    direction: ltr !important;
+}
+body{
+    background-color: #eff3f6;
+}
+.pict{
+    width: 250px;
+    height: 250px;
+}
+.space{
+    width: 20px;
+}
+.border{
+    border-color: #1A7ED3 !important;
+}
+.space{
+    height: 30px;
+    width: 20px;
+}
+.logImg{
+    width: 600px;
+    height: 600px;
+    /* background-color: aqua; */
+}
+.sec1{
+    width: 1200px;
+    height: 600px;
+    margin-top: 300px;
+}
+a{
+    text-decoration: none;
+}
+.logo1{
+    width: 150px;
+    height: 150px;
+}
+
+#logo{
+    width: 60px;
+}
+
+@media print {
+    .p-none{
+        display: none !important;
+    }
+}
