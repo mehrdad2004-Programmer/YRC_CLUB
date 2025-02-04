@@ -1,7 +1,9 @@
 <?php
     session_start();
     unset($_SESSION['token']);
-    
+
+    require_once __DIR__ . "/middleware/sanitize.php";
+
     require_once __DIR__ . "/../modules/users/authentication.php";
     require_once __DIR__ . "/../modules/users/user.php";
     require_once __DIR__ . "/../modules/database/database.php";

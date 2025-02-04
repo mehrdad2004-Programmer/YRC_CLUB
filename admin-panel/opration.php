@@ -1,8 +1,10 @@
 <?php
     session_start();
     require_once __DIR__ . "/../modules/database/database.php";
+    require_once __DIR__ . "/middleware/sanitize.php";
 
-    $db = new Database();
+
+$db = new Database();
 
     switch($_GET['mode']){
         case "status":
@@ -18,6 +20,11 @@
         case "delete":
             $db->delete('courses', ['code' => $_GET['code']]);
             $_SESSION['status'] = "دوره با موفقیت حذف شد";
+            break;
+        case "del_user":
+            $db->delete('payment', ["st_id_no" => $_GET['code']]);
+            $_SESSION['status'] = "دانشچو با موفقیت حذف شد";
+            header("Location: exp.php");
             break;
     }
 

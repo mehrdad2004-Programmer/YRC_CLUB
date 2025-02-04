@@ -7,14 +7,13 @@
     switch($_GET['mode']){
         case "community":
             $counter = 0;
-            $data = $db->join(['registration', 'payment'], 'INNER', "st_id_no");
+            $data = $db->join(['registration', 'payment'], 'LEFT', "st_id_no");
             foreach($data['result'] as &$item){
                 //print_r($item);
-                $item['community'] = $db->read('courses', ['code' => '2020'])[0]['comunity'];
-                $item['community'] = $db->read('courses', ['code' => '2020'])[0]['comunity'];
-                $item['course_title'] = $db->read('courses', ['code' => '2020'])[0]['title'];
-                $item['course_teacher'] = $db->read('courses', ['code' => '2020'])[0]['teacher'];
-                $item['course_date'] = $db->read('courses', ['code' => '2020'])[0]['date'];
+                $item['community'] = $db->read('courses', ['code' => $item['course_code']])[0]['comunity'];
+                $item['course_title'] = $db->read('courses', ['code' => $item['course_code']])[0]['title'];
+                $item['course_teacher'] = $db->read('courses', ['code' => $item['course_code']])[0]['teacher'];
+                $item['course_date'] = $db->read('courses', ['code' => $item['course_code'] ])[0]['date'];
             }
             print_r(json_encode($data, JSON_PRETTY_PRINT));
             break;

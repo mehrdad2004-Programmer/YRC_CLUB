@@ -21,15 +21,6 @@ fetch($url, {
     return response.json(); // Parse the JSON from the response
 })
 .then(data => {
-    console.log(data.result); // Log the entire fetched dat
-    communities = new Set(data.result.map(item => item.community));
-    communities.forEach(e => {
-        let option = document.createElement("option");
-        option.value = e
-        option.textContent = e
-        community.appendChild(option);
-    });
-
         year.addEventListener('change', ()=>{
             course.innerHTML = "";
             let courses = new Set(data.result
@@ -56,10 +47,21 @@ fetch($url, {
             tr.innerHTML = `<td>${i}</td>
                             <td>${item.st_fname} ${item.st_lname}</td>
                             <td>${item.st_code}</td>
-                            <td>${item.field}</td>`
+                            <td>${item.field}</td>
+                            <td><a class="btn p-none btn-danger del_user" code="${item.st_id_no}">حذف دانشجو</a>`
+
 
             root.appendChild(tr);
             tr = "";
+        })
+
+        let del = document.querySelectorAll(".del_user");
+        del.forEach(item => {
+            item.addEventListener('click', function(e){
+                if(confirm('آیا اطمینان دارید؟')){
+                    window.location.href = "opration.php?mode=del_user&code=" + e.target.getAttribute('code');
+                }
+            })
         })
         if(root.innerHTML === ""){
             let tr = document.createElement("tr");

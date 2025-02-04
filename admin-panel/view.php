@@ -1,13 +1,14 @@
 <?php 
     //adding authorization
     require_once __DIR__ . "/middleware/authorization.php";
+
 ?>
 <?php
     require_once __DIR__ . "/../modules/course/Course.php";
 
     $course = new Course();
     if(isset($_GET['submit'])){
-       $courses =  $course->fetch_courses($_GET['community'], $_GET['year']);
+       $courses =  $course->fetch_courses($_GET['comm'], $_GET['year']);
 
     }
 
@@ -46,15 +47,26 @@
         <form method="GET">
             <div class="container d-lg-flex">
                 <div class="container">
-                    <select class="form-control" name="community" id="">
-                        <option value="کامپیوتر">کامپیوتر</option>
+                    <select class="form-control" name="comm" id="">
+                        <?php
+                        $data = $db->read('communities');
+                        foreach($data as $item){
+                            echo "<option>".$item['title']."</option>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="space"></div>
                 <div class="container">
                     <select class="form-control" name="year" id="">
-                        <option>1403</option>
-                        <option>1402</option>
+                        <?php
+                            $year = 1403;
+                            for($i = 0; $i < 5; $i++){
+                                echo "<option>$year</option>";
+                                $year++;
+                            }
+                        ?>
+                        ?>
                     </select>
                 </div>
                 <div class="space"></div>
@@ -65,7 +77,7 @@
         </form>
         <div class="container mt-5">
             <h3>
-                دوره های انجمن <?php echo $_GET['community']?> - <?php echo     $_GET['year']?>
+                دوره های انجمن <?php echo $_GET['comm']?> - <?php echo     $_GET['year']?>
             </h3>
         </div>
         <table class="table mt-3 text-center">

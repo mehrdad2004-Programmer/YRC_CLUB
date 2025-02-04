@@ -20,11 +20,11 @@
         "registration" => "registration"
     ];
 
-    $communities = [
-        "کامپیوتر",
-    ];
+    $communities = $db->read('communities');
 
     $last_message = $bot->get_last_message();
+    print_r($last_message);
+    $chat_id = $last_message['chat_id'];
     //print_r($last_message['message']);
     switch ($last_message['message']){
         case "منوی اصلی":
@@ -69,21 +69,23 @@
             case $item_co:
                 //  echo "found";
                 $bot->option01 = "منوی اصلی";
-                $data = $db->read($tables['courses'], ['comunity' => "computer"]);
+                $data = $db->read($tables['courses'], ['comunity' => $item_co, 'status' => "1"]);
                 if(count($data) > 0){
                     $bot->payload = $db->read($tables['registration'], ['chat_id' => $last_message['chat_id']])[0]['st_id_no'] . "," . $data[0]['code'];
                     echo $bot->payload;
                     $text = "";
                     foreach($data as $item){
-                        $text .= "نام دوره : " . $item['title'] . "\n" . "مدرس : " . $item['teacher'] .  "\n" ."توضیحات : " . $item['description']  . "\n" . "تاریخ شروع : " . $item['start'] . "\n"  . "کد دوره : " . "قیمت: " . $item['amount'] . " ریال" . "\n"  . "کد دوره : " . $item['code'];
+                        $text .= "نام دوره : " . $item['title'] . "\n" . "مدرس : " . $item['teacher'] .  "\n" ."توضیحات : " . $item['description']  . "\n" . "تاریخ شروع : " . $item['start'] . "\n" . "قیمت: " . $item['amount'] . " ریال" . "\n"  . "کد دوره : " . $item['code'];
                         $bot->sendInvoice($last_message['chat_id'], $item['title'], $text, json_encode([
                             ["label" => $item['title'], "amount" => $item['amount']]
                         ]));
+                        $text = "";
                     }
                     $bot->option01 = "منوی اصلی";
                 }else{
                     $bot->send_message($last_message['chat_id'], "دوره ای برای این انجمن یافت نشد");
                 }
+                    $text = "";
 
                 break;
         }
@@ -121,12 +123,15 @@
             if($last_message['message']['chat']['title'] == "رسید پرداخت"){
                 $acc->set_bill([
                     "amount" => $last_message['message']['successful_payment']['total_amount'],
-                    "id_no" => explode(',', $last_message['message']['successful_payment']['invoice_payload'])[0],
+                    "st_id_no" => explode(',', $last_message['message']['successful_payment']['invoice_payload'])[0],
                     "course_code" => explode(',', $last_message['message']['successful_payment']['invoice_payload'])[1],
                     "transaction_id" => $last_message['message']['successful_payment']['provider_payment_charge_id'],
                     "date" => jdate("Y/m/d"),
                     "time" => jdate("H:i:s")
                 ]);
+                $bot->option01 = "منوی اصلی";
+                $bot->send_message($db->read('registration', ['st_id_no' => explode(',', $last_message['message']['successful_payment']['invoice_payload'])[0]])[0]['chat_id'], "با موفقیت ثبت نام شدید");
+
             }
 
         }

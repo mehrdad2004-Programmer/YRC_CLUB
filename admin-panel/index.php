@@ -1,6 +1,8 @@
 <?php 
     //adding authorization
     require_once __DIR__ . "/middleware/authorization.php";
+    require_once __DIR__ . "/middleware/sanitize.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,11 +70,11 @@
                 <div class="container">
                     <div class="container">
                         <a href="#">
-                            <img class="pict" src="statics/img/Make it rain-pana.png" alt="">
+                            <img class="pict" src="statics/img/Make it rain-pana.png" alt="" style="filter: grayscale(0.8)">
                         </a>
                     </div>
                     <div class="container">
-                        <span>
+                        <span class="text-muted">
                             امور مالی
                         </span>
                     </div>

@@ -50,6 +50,7 @@
         public function fetch_courses($community, $year){
             $arr = [];
             $courses = $this->read('courses', ['comunity' => $community]);
+            //print_r($courses);
             try{
                 if($community == "" && $year == ""){
                     return "لطفا یکی از دوره ها را انتخاب نمایید";

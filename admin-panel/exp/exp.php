@@ -2,6 +2,7 @@
 //error_reporting(0);
 require 'vendor/autoload.php'; // Load Composer's autoloader
 require_once __DIR__ . "/../../modules/database/database.php";
+require_once __DIR__ . "/../middleware/sanitize.php";
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

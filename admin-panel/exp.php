@@ -1,6 +1,8 @@
 <?php
 //adding authorization
 require_once __DIR__ . "/middleware/authorization.php";
+require_once __DIR__ . "/middleware/sanitize.php";
+
 ?>
 <?php
     require_once __DIR__ . "/../modules/database/database.php";
@@ -27,6 +29,16 @@ require_once __DIR__ . "/middleware/authorization.php";
 //including header
 require_once "components/header.php";
 ?>
+<?php
+    if(isset($_SESSION['status'])){
+        echo "<div class='alert container mt-3 alert-success alert-dismissible fade show' role='alert'>
+                        ".$_SESSION['status']."
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+
+        unset($_SESSION['status']);
+    }
+?>
     <div class="container text-center mt-3 p-2 p-none">
         <h2>
             صدور لیست کلاسی
@@ -39,14 +51,24 @@ require_once "components/header.php";
             <div class="container d-lg-flex">
                 <div class="container">
                     <select class="form-control" name="community" id="community">
-                        
+                        <?php
+                        $data = $db->read('communities');
+                        foreach($data as $item){
+                            echo "<option>".$item['title']."</option>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="space"></div>
                 <div class="container">
                     <select class="form-control" name="" id="year">
-                        <option>انتخاب</option>
-                        <option>1403</option>
+                        <?php
+                        $year = 1403;
+                        for($i = 0; $i < 5; $i++){
+                            echo "<option>$year</option>";
+                            $year++;
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="space"></div>
@@ -75,6 +97,7 @@ require_once "components/header.php";
                 <th>نام و نام خانوادگی</th>
                 <th>شماره دانشجویی</th>
                 <th>رشته</th>
+                <th>وضعیت</th>
               </tr>
             </thead>
             <tbody id="root">

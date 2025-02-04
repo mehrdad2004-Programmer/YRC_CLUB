@@ -1,6 +1,8 @@
 <?php 
     //adding authorization
     require_once __DIR__ . "/middleware/authorization.php";
+    require_once __DIR__ . "/middleware/sanitize.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

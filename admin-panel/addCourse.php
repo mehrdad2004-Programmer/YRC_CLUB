@@ -1,8 +1,24 @@
 <?php 
     //adding authorization
     require_once __DIR__ . "/middleware/authorization.php";
+    require_once __DIR__ . "/middleware/sanitize.php";
 ?>
-<?php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="statics/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/css/style.css">
+</head>
+<body dir="rtl">
+    <?php
+        //including header
+        require_once "components/header.php";
+    ?>
+    <?php
     require_once __DIR__ . "/../modules/course/Course.php";
     require_once __DIR__ . "/../modules/database/database.php";
     $course = new Course();
@@ -21,17 +37,23 @@
                         "title" => $_POST['title'],
                         "teacher" => $_POST['teacher'],
                         "comunity" => $_POST['community'],
-                        "poster" => $_POST['poster'],
+                        "poster" => "nothing",
                         "description" => $_POST['description'],
                         "start" => $_POST['start'],
                         "amount" => $_POST['amount'],
-                        "start" => $_POST['start'],
+                        "date" => jdate("Y/m/d"),
                         "code" => $course->unique_code(),
                     ]);
                     if($res){
-                        echo "course created";
+                        echo "<div class='alert container mt-3 alert-success alert-dismissible fade show' role='alert'>
+                        دوره با موفقیت ایجاد شد
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
                     }else{
-                        echo "course not crated";
+                        echo "<div class='alert container mt-3 alert-danger alert-dismissible fade show' role='alert'>
+                        خطا در تشکیل دوره، مجدد تلاش کنید
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
                     }
                     break;
                 case "edit":
@@ -39,11 +61,9 @@
                         "title" => $_POST['title'],
                         "teacher" => $_POST['teacher'],
                         "comunity" => $_POST['community'],
-                        "poster" => $_POST['poster'],
                         "description" => $_POST['description'],
                         "start" => $_POST['start'],
                         "amount" => $_POST['amount'],
-                        "start" => $_POST['start'],
                     ], ["code" => $_GET['code']]);
                     if($res){
                         echo "updated";
@@ -53,20 +73,6 @@
             }
         }
     }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="statics/css/bootstrap.min.css">
-    <link rel="stylesheet" href="statics/css/style.css">
-</head>
-<body dir="rtl">
-    <?php
-        //including header
-        require_once "components/header.php";
     ?>
     <div class="container text-center mt-3 p-2">
         <h2>
@@ -109,7 +115,12 @@
                 </div>
                 <div class="container p-2">
                     <select class="form-control" name="community" id="">
-                        <option>کامپیوتر</option>
+                        <?php
+                            $data = $db->read('communities');
+                            foreach($data as $item){
+                                echo "<option>".$item['title']."</option>";
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -135,16 +146,16 @@
                     <input class="form-control" type="text" name="start" value=<?php echo isset($val['start']) ? $val['start'] : ""; ?>>
                 </div>
             </div>
-            <div class="container">
-                <div class="container mt-3">
-                    <span>
-                        پوستر : 
-                    </span>
-                </div>
-                <div class="container p-2">
-                    <input class="form-control" type="file" name="poster" value=<?php echo isset($val['poster']) ? $val['poster'] : ""; ?>>
-                </div>
-            </div>
+<!--            <div class="container">-->
+<!--                <div class="container mt-3">-->
+<!--                    <span>-->
+<!--                        پوستر : -->
+<!--                    </span>-->
+<!--                </div>-->
+<!--                <div class="container p-2">-->
+<!--                    <input class="form-control" type="file" name="poster" value=--><?php //echo isset($val['poster']) ? $val['poster'] : ""; ?><!-->-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="container text-center mt-3">
                 <input class="btn btn-primary" type="submit" value="تایید" name="submit">
             </div>
