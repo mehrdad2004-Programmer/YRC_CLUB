@@ -72,13 +72,13 @@ require_once "components/header.php";
             <div class="container border border-2 rounded-3 p-2">
                 <div class="container">
                     <div class="container">
-                        <a href="">
-                            <img class="pict" src="statics/img/Add User-pana.png" alt="" style="filter: grayscale(0.8)">
+                        <a href="adduser.php">
+                            <img class="pict" src="statics/img/Add User-pana.png" alt="">
                         </a>
                     </div>
                     <div class="container">
-                        <span class="text-muted">
-                            افزودن کاربر جدید (غیرفعال)
+                        <span class="">
+                            افزودن کاربر جدید
                         </span>
                     </div>
                 </div>

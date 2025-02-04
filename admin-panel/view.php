@@ -99,7 +99,8 @@
                                 <td>
                                     <a href='addCourse.php?mode=edit&code=".$item['code'] . "' class='btn btn-primary'>ویرایش دوره</a>
                                     <a class='btn btn-danger delete' code = '".$item['code']."'>حذف دوره</a>
-                                    <a class='btn btn-success status' code = '".$item['code']."'>فعال / غیرفعال</a>
+                                    <a class='btn btn-warning status' code = '".$item['code']."'>فعال / غیرفعال</a>
+                                    <a href='exp/exp.php?code=".$item['code']."' class='btn btn-success status' code = '".$item['code']." '>اکسل مالی</a>
                                 </td>
                             </tr>
                         ";

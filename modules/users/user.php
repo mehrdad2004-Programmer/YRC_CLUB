@@ -8,10 +8,13 @@
             $this->tname = 'users';
         }
 
-        public function createUser(string $username, string $password) : bool{
+        public function createUser(string $username, string $password, string $fname, string $lname, string $semat) : bool{
             $reg = $this->create($this->tname, [
                 "username" => $username,
                 "password" => password_hash($password, PASSWORD_DEFAULT),
+                "fname" => $fname,
+                "lname" => $lname,
+                "semat" => $semat,
                 "token" => bin2hex(random_bytes(100))
             ]);
             if($reg){

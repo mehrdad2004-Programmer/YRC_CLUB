@@ -43,11 +43,19 @@ a{
 }
 .logo1{
     width: 150px;
-    height: 150px;
+    height: 140px;
 }
 
 #logo{
     width: 60px;
+}
+
+.login-box{
+    width: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @media print {
